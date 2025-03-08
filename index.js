@@ -37,11 +37,11 @@ const db = pgp(dbConfig);
 
 // test your database
 db.connect()
-  .then(obj => {
+  .then((obj) => {
     console.log('Database connection successful'); // you can view this message in the docker compose logs
     obj.done(); // success, release the connection;
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('ERROR:', error.message || error);
   });
 
@@ -61,13 +61,13 @@ app.use(
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-  })
+  }),
 );
 
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  })
+  }),
 );
 
 app.get('/', (req, res) => {
