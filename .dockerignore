@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.husky/
+.eslintcache
+.eslintrc.cjs
+.prettierc.cjs
+docker-compose.yaml
+docker-compose.prod.yaml
+.vscode/

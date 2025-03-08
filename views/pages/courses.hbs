@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Courses</title>
+  </head>
+  <body style="padding: 20px;">
+      <h1>Courses</h1>
+
+      {{> message}}
+
+      <table border="1" cellspacing="0" cellpadding="5" width="100%">
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Credit Hours</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each courses}}
+            <tr>
+              <td>{{course_id}}</td>
+              <td>{{course_name}}</td>
+              <td>{{credit_hours}}</td>
+              <td>
+                <form action="/courses/add" method="POST">
+                  <input type="hidden" name="course_id" value="{{course_id}}" />
+                  {{#if taken}}
+                    <button type="submit" disabled>ADD</button>
+                  {{else}}
+                    <button type="submit">ADD</button>
+                  {{/if}}
+                </form>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+  </body>
+</html>
