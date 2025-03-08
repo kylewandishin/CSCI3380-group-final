@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development', // or 'production' as needed
@@ -14,10 +15,16 @@ module.exports = {
     rules: [
       {
         test: /\.hbs$/,
-        loader: 'handlebars-loader',
-      },
-      // Add additional rules (e.g., for Babel) if needed
-    ],
+        loader: 'handlebars-loader'
+      }
+    ]
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'views', to: 'views' }
+      ]
+    })
+  ],
   devtool: 'source-map',
 };

@@ -2,10 +2,10 @@ services:
   db:
     image: postgres:14
     env_file: .env
-    ports:
-      - "5432:5432"
+    expose:
+      - '5432'
     volumes:
-      - final:/var/lib/postgresql/data
+      - final-prod:/var/lib/postgresql/data
       - ./init_data:/docker-entrypoint-initdb.d
     restart: unless-stopped
     healthcheck:
@@ -13,22 +13,21 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: production
+    image: node:lts-alpine
+    user: 'node' #you can remove this if you are facing access issues when installing node packages
+    working_dir: /home/node/app
     env_file: .env
+    environment:
+      - NODE_ENV=prod
     depends_on:
       db:
         condition: service_healthy
-    command: node dist/bundle.js
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/home/node/app
+    command: 'npm start'
     restart: unless-stopped
-
 volumes:
-  final:
+  final-prod:

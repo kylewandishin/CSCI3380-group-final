@@ -71,7 +71,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.render('pages/home');
+  res.render('pages/login');
 });
 
 app.listen(3000);
