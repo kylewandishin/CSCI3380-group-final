@@ -1,0 +1,40 @@
+{
+  "name": "final",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky",
+    "precommit": "lint-staged",
+    "test": "echo \"not implemented\"",
+    "dev": "nodemon --watch server.js",
+    "start": "node server.js",
+    "lint": "eslint . -c .eslintrc.cjs --fix --cache",
+    "format": "prettier --write . "
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint"
+    ],
+    "*.hbs": [
+      "hbs-lint"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylewandishin/CSCI3380-group-final.git"
+  },
+  "author": "kyle wandishin",
+  "bugs": {
+    "url": "https://github.com/kylewandishin/CSCI3380-group-final/issues"
+  },
+  "homepage": "https://github.com/kylewandishin/CSCI3380-group-final#readme",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^9.22.0",
+    "eslint-plugin-html": "^8.1.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.3"
+  }
+}
