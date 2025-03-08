@@ -15,14 +15,15 @@
     "deploy": "docker-compose -f docker-compose.prod.yaml up -d --build",
     "build": "webpack --config webpack.config.js --mode production",
     "lint": "eslint . -c .eslintrc.cjs --fix --cache",
-    "format": "prettier --write . "
+    "format": "prettier --write ./**/*.{js,json,css,md}",
+    "clean": "npm run format && npm run lint"
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint"
+      "npm run clean"
     ],
     "*.hbs": [
-      "hbs-lint"
+      "npm run lint"
     ]
   },
   "repository": {

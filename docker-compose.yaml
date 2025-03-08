@@ -6,7 +6,7 @@ services:
       - '5432'
     volumes:
       - final-dev:/var/lib/postgresql/data
-      - ./init_data:/docker-entrypoint-initdb.d
+      - ./db:/docker-entrypoint-initdb.d
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
@@ -26,7 +26,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-    
+
       - ./:/home/node/app
     command: 'npm run dev'
     restart: unless-stopped
