@@ -6,7 +6,7 @@ services:
       - '5432'
     volumes:
       - final-prod:/var/lib/postgresql/data
-      - ./init_data:/docker-entrypoint-initdb.d
+      - ./db:/docker-entrypoint-initdb.d
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]

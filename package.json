@@ -22,7 +22,7 @@
       "npm run lint"
     ],
     "*.hbs": [
-      "hbs-lint"
+      "npm run lint"
     ]
   },
   "repository": {

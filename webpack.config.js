@@ -21,7 +21,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: 'views', to: 'views' }],
+      patterns: [{ from: 'src/views', to: 'src/views' }],
     }),
   ],
   devtool: 'source-map',
