@@ -71,7 +71,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.render('pages/login');
+  res.render('pages/logout');
 });
 
 app.listen(3000);
