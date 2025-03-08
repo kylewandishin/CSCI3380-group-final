@@ -15,16 +15,14 @@ module.exports = {
     rules: [
       {
         test: /\.hbs$/,
-        loader: 'handlebars-loader'
-      }
-    ]
+        loader: 'handlebars-loader',
+      },
+    ],
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [
-        { from: 'views', to: 'views' }
-      ]
-    })
+      patterns: [{ from: 'views', to: 'views' }],
+    }),
   ],
   devtool: 'source-map',
 };
