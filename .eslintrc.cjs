@@ -3,6 +3,9 @@ const prettierConfig = require('./.prettierrc.cjs');
 
 module.exports = [
   {
+    ignores: ['node_modules/', 'dist/'],
+  },
+  {
     languageOptions: {
       parserOptions: {
         ecmaVersion: 2023,
@@ -23,5 +26,16 @@ module.exports = [
   {
     files: ['*.html', '*.hbs'],
     processor: 'html',
+  },
+  {
+    files: ['*.js'],
+    languageOptions: {
+      globals: {
+        require: 'readonly',
+        module: 'readonly',
+        process: 'readonly',
+        __dirname: 'readonly',
+      },
+    },
   },
 ];
