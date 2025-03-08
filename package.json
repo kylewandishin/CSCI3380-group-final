@@ -9,6 +9,7 @@
     "prestart": "npm run build",
     "prebuild": "npm install",
     "test": "chmod +x ./scripts/test.sh && ./scripts/test.sh",
+    "test:actions": "chmod +x ./scripts/actions.sh && ./scripts/actions.sh",
     "dev": "nodemon --watch index.js ",
     "start": "node dist/bundle.js",
     "deploy": "docker-compose -f docker-compose.prod.yaml up -d --build",
