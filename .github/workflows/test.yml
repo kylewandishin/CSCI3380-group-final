@@ -19,11 +19,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: change to the root directory
-        run: cd ProjectSourceCode
-
       - name: Install dependencies
         run: npm install
+        working-directory: ./ProjectSourceCode
         
       - name: Run tests
         run: npm run test:actions
+        working-directory: ./ProjectSourceCode
