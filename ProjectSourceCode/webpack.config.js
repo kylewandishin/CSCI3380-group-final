@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development', // or 'production' as needed
-  entry: './index.js',
+  entry: './src/index.js',
   target: 'node',
   externals: [nodeExternals()], // This tells webpack not to bundle node_modules
   output: {
@@ -21,7 +21,10 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: 'src/views', to: 'src/views' }],
+      patterns: [
+        { from: 'src/views', to: 'views' },
+        { from: 'src/resources', to: 'src/resources' },
+      ],
     }),
   ],
   devtool: 'source-map',

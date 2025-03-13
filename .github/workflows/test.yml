@@ -21,6 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./ProjectSourceCode
         
       - name: Run tests
         run: npm run test:actions
+        working-directory: ./ProjectSourceCode
