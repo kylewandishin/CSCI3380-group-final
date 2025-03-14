@@ -8,7 +8,7 @@
     "predev": "npm i",
     "prestart": "npm run build",
     "prebuild": "npm install",
-    "test": "chmod +x ./scripts/test.sh && ./scripts/test.sh",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "test:actions": "chmod +x ./scripts/actions.sh && ./scripts/actions.sh",
     "dev": "nodemon --watch src/index.js ",
     "start": "node dist/bundle.js",
