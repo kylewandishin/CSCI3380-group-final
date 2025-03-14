@@ -9,7 +9,8 @@
     "prestart": "npm run build",
     "prebuild": "npm install",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "test:actions": "chmod +x ./scripts/actions.sh && ./scripts/actions.sh",
+    "test:unit": "echo \"Error: no test specified\" && exit 0",
+    "test:actions": "concurrently -g -n \"eslint,test:unit,build\" -c \"#341BAB,#A6CC66,#3077C6\" \"bun run lint\" \"bun run test:unit\" \"bun run build\"",
     "dev": "nodemon --watch src/index.js ",
     "start": "node dist/bundle.js",
     "deploy": "docker-compose -f docker-compose.prod.yaml up -d --build",
@@ -37,6 +38,7 @@
   "homepage": "https://github.com/kylewandishin/CSCI3380-group-final#readme",
   "description": "",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "copy-webpack-plugin": "^13.0.0",
     "eslint": "^9.22.0",
     "eslint-plugin-html": "^8.1.2",
