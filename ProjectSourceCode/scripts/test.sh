@@ -6,3 +6,6 @@ if git diff --name-only | grep -q '^\.eslintcache$'; then
 fi
 
 git update-index --again
+
+npm run test
+npm run build
