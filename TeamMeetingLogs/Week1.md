@@ -14,11 +14,16 @@ Branching, working on issue, and committing your issue:
 Github > issues > choose an issue assigned to you
 
 Cd projectsourcecode **- always make sure you're working in source code folder!!**
-Git checkout -b <branch name> 
-**You are now in a new branch called <branch name>. Now you can write your local code.**
+
+Git checkout -b branch_name
+
+**You are now in a new branch called branch_name. Now you can write your local code.**
+
 **To commit in terminal:**
+
 gc -m “add tailwind to head.hbs _closes #19_”
-Git push origin <branch name>
+
+Git push origin branch_name
 
 Github -> create pull request
 Code is tested to see if it breaks anything
