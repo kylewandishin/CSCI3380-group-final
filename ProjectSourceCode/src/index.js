@@ -70,7 +70,25 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.render('pages/logout');
+  res.render('pages/map', {
+    centerLat: 40.019,
+    centerLng: -105.2747,
+    zoom: 14,
+    markers: [
+      {
+        lat: 40.019,
+        lng: -105.2747,
+        img: 'https://ih1.redbubble.net/image.5161559193.6079/raf,360x360,075,t,fafafa:ca443f4786.jpg',
+        text: 'I am the angry pumpkin',
+      },
+      {
+        lat: 40.016,
+        lng: -105.2447,
+        img: 'https://ih1.redbubble.net/image.5161559193.6079/raf,360x360,075,t,fafafa:ca443f4786.jpg',
+        text: 'I am the angry pumpkin',
+      },
+    ],
+  });
 });
 
 app.listen(3000);
