@@ -1,29 +1,32 @@
-<header>
-  <nav class="bg-gray-100 p-4 flex justify-between items-center">
-    <div class="flex items-center space-x-4">
-      <a class="text-xl font-bold" href="/">cool AF</a>
-      <ul class="flex space-x-4">
-        <li class="nav-item">
-          <!-- Navigates to home page -->
-          <a class="text-gray-700 hover:text-gray-900" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <!-- Navigates to courses page -->
-          <a class="text-gray-700 hover:text-gray-900" href="/courses">Courses</a>
-        </li>
-        <li class="nav-item">
-          <!-- Navigates to logout page -->
-          <a class="text-gray-700 hover:text-gray-900" href="/logout">Log Out</a>
-        </li>
-      </ul>
+<header class="bg-[#2b0c0c] p-2 shadow-md text-center">
+  <!-- Title -->
+  <h1 class="text-5xl font-bold text-[#9c3c3c] tracking-wider" style="font-family: 'Graffiti', sans-serif;">
+    GraffTrak
+  </h1>
+
+  <!-- Navbar -->
+  <nav class="bg-[#2b0c0c] p-3 flex justify-between items-center">
+    <!-- Left Spacing (Keeps everything centered) -->
+    <div class="w-1/5"></div>
+
+    <!-- Centered Navbar Links with More Spacing -->
+    <div class="flex justify-center space-x-20 w-3/5">
+      <a class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]" href="/graff-map">Graff Map</a>
+      <a class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]" href="/account">My Account</a>
+      <div class="flex items-center bg-[#4d1c1c] px-6 py-2 rounded-lg border border-[#9c3c3c]">
+        <span class="text-[#9c3c3c]">🔍</span>
+        <input type="text" placeholder="Search" class="bg-transparent text-[#9c3c3c] border-none focus:outline-none ml-2 w-36" />
+      </div>
     </div>
 
-    <div class="flex items-center space-x-4">
-      <ul class="flex space-x-4">
-        <li class="nav-item">
-          <a class="text-gray-700 hover:text-gray-900" href="#">{{email}}</a>
-        </li>
-      </ul>
+    <!-- Logout Button (Right-Aligned) -->
+    <div class="w-1/5 flex justify-end">
+      <script>
+        const userLoggedIn = true; // Replace with actual authentication check
+        if (userLoggedIn) {
+          document.write('<a href="/logout" class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]">Logout</a>');
+        }
+      </script>
     </div>
   </nav>
 </header>
