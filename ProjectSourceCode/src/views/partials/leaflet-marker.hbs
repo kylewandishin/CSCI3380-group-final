@@ -1,0 +1,9 @@
+<div id="popup-{{lat}}-{{lng}}" style="display:none;">
+  {{> leaflet-popup imgUrl=popupImgUrl text=popupText }}
+</div>
+<script>
+  // Retrieve the rendered popup HTML from the hidden div
+  var popupHtml = document.getElementById('popup-{{lat}}-{{lng}}').innerHTML;
+  // Add the marker to the map and bind the popup
+  L.marker([{{lat}}, {{lng}}]).addTo(map).bindPopup(popupHtml);
+</script>

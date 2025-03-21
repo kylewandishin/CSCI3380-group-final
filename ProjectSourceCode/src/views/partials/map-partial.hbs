@@ -1,0 +1,10 @@
+<div id="map" class="h-screen fixed inset-0 z-[-1]"></div>
+<script>
+  // Initialize the map with the provided center coordinates and zoom level
+  var map = L.map('map').setView([{{lat}}, {{lng}}], {{zoom}});
+  
+  // Add OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+</script>

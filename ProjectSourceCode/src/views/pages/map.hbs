@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  {{> map-partial lat=centerLat lng=centerLng zoom=zoom }}
+  
+  {{#each markers}}
+    {{> leaflet-marker lat=this.lat lng=this.lng popupImgUrl=this.img popupText=this.text }}
+  {{/each}}
+</body>
+</html>
