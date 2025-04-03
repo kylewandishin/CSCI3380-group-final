@@ -95,5 +95,29 @@ app.get('/profile', (req, res) => {
   res.render('pages/profile');
 });
 
+app.post('/posts/create', async (req, res) => {
+  try {
+    const userId = 1;
+
+    const { description } = req.body;
+    
+    // placeholder image
+    let imageUrl = null;
+
+    let lat = 0.0;
+    let lng = 0.0;
+
+    await db.none(`
+      INSERT INTO graffiti_posts (user_id, image_url, description, latitude, longitude)
+      VALUES ($1, $2, $3, $4, $5)
+    `, [userId, imageUrl, description, lat, lng]);
+
+    res.redirect('/profile');
+  } catch (err) {
+    console.error('Error creating post:', err);
+    res.redirect('/profile');
+  }
+});
+
 app.listen(3000);
 console.log('Server is listening on port 3000');

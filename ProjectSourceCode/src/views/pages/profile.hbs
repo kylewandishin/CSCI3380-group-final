@@ -35,6 +35,48 @@
         <!-- Second Inner Rectangle -->
         <div class="bg-[#4D1111] w-full max-w-[95%] h-[90%] p-5 flex flex-col items-center">
             <h2 class="text-2xl font-bold text-white mb-5">POST CATALOG</h2>
+            <!-- New post form -->
+            <form 
+                action="/posts/create" 
+                method="POST" 
+                enctype="multipart/form-data"
+                class="mb-4 w-full max-w-md bg-[#3B0A0A] p-4 border border-[#4D1111] rounded shadow"
+            >
+                <div class="mb-3">
+                <label for="descriptionInput" class="block mb-1 text-white">Description:</label>
+                <textarea 
+                    id="descriptionInput" 
+                    name="description" 
+                    rows="3"
+                    class="w-full bg-[#3B0A0A] text-white border border-[#4D1111] rounded p-2"
+                ></textarea>
+                </div>
+
+                <div class="mb-3">
+                <label for="imageInput" class="block mb-1 text-white">Image:</label>
+                <input 
+                    id="imageInput" 
+                    name="image" 
+                    type="file" 
+                    accept="image/*"
+                    class="block w-full text-sm text-white
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-[#4D1111] file:text-white
+                        hover:file:bg-[#3B0A0A]"
+                />
+                </div>
+
+                <button 
+                type="submit" 
+                class="bg-red-800 text-white py-2 px-4 rounded hover:bg-red-700 font-bold"
+                >
+                Create Post
+                </button>
+            </form>
+            <!-- End of new post form -->
+
             <div class="grid grid-cols-4 gap-5 w-full h-full">
                 <!-- Post 1 -->
                 <div class="bg-[#3B0A0A] flex items-center justify-center text-white">
