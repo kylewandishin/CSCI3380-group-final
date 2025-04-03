@@ -15,7 +15,7 @@ services:
       retries: 5
   web:
     image: node:lts-alpine
-    user: 'node' #you can remove this if you are facing access issues when installing node packages
+    user: '' #you can remove this if you are facing access issues when installing node packages
     working_dir: /home/node/app
     env_file: .env
     environment:

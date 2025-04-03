@@ -95,5 +95,46 @@ app.get('/profile', (req, res) => {
   res.render('pages/profile');
 });
 
+
+// login routes
+app.get('/login', (req, res) => {
+  res.render('pages/login');
+});
+
+app.post('/login', async (req, res) => {
+  try{
+  let username = req.body.username;
+  let password = req.body.password;
+  const searchQuery = 'SELECT * FROM users WHERE username = $1;';
+  let user= await db.one(searchQuery, [username])
+      // check if password from request matches with password in DB
+      const match = await bcrypt.compare(req.body.password, user.password);
+      if (match) {
+        req.session.user = user;
+req.session.save();
+          console.log("Login successful");
+          res.redirect('/profile')
+      }
+      else{
+        res.redirect('/login')
+        
+      }
+    }
+  catch {
+      console.log("Login failed");
+      return res.render('pages/login', { error: "Invalid username or password, please try again." });
+  }
+});
+
+// This was on lab 8 and can be used later for authentification.
+const auth = (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
+app.use(auth);
+
 app.listen(3000);
 console.log('Server is listening on port 3000');
