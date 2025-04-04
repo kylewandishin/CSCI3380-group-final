@@ -91,6 +91,10 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/welcome', (req, res) => {
+  res.json({status: 'success', message: 'Welcome!'});
+});
+
 app.get('/profile', (req, res) => {
   res.render('pages/profile');
 });
@@ -136,5 +140,5 @@ const auth = (req, res, next) => {
 
 app.use(auth);
 
-app.listen(3000);
+module.exports = app.listen(3000);
 console.log('Server is listening on port 3000');
