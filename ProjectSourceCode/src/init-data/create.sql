@@ -40,11 +40,3 @@ CREATE TABLE favorites (
     FOREIGN KEY (graffiti_id) REFERENCES graffiti_posts(id) ON DELETE CASCADE
 );
 
--- Graffiti Metadata Table
-CREATE TABLE graffiti_metadata (
-    graffiti_id INT PRIMARY KEY,
-    view_count INT DEFAULT 0,
-    report_count INT DEFAULT 0,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (graffiti_id) REFERENCES graffiti_posts(id) ON DELETE CASCADE
-);
