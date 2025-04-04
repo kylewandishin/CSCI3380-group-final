@@ -1,4 +1,5 @@
 services:
+  
   db:
     image: postgres:14
     env_file: .env
@@ -7,12 +8,6 @@ services:
     volumes:
       - final-dev:/var/lib/postgresql/data
       - ./src/init-data:/docker-entrypoint-initdb.d
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
   web:
     image: node:lts-alpine
     user: '' #you can remove this if you are facing access issues when installing node packages
@@ -21,8 +16,7 @@ services:
     environment:
       - NODE_ENV=prod
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     ports:
       - '3000:3000'
     volumes:

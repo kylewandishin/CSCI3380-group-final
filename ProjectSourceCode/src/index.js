@@ -70,6 +70,66 @@ app.use(
 );
 
 app.get('/', (req, res) => {
+  res.redirect('/login');
+});
+app.get('/register', (req, res) => {
+  res.render('pages/register');
+});
+app.post('/register', async (req, res) => {
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10);
+    await db.query('INSERT INTO users (username, password) VALUES ($1, $2)', [
+      req.body.username,
+      hash,
+    ]);
+    res.redirect('/login');
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.redirect('/register');
+  }
+});
+app.get('/login', (req, res) => {
+  res.render('pages/login');
+});
+app.post('/login', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE username = $1', [
+      req.body.username,
+    ]);
+    if (!result || result.length === 0) {
+      return res.redirect('/register');
+    }
+    const user = result[0];
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (!match) {
+      return res.render('pages/login', {
+        message: 'Incorrect username or password.',
+      });
+    }
+    req.session.user = user;
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.redirect('/login');
+      }
+      res.redirect('/map');
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.render('pages/login', {
+      message: 'An error occurred. Please try again.',
+    });
+  }
+});
+const auth = (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+app.use(auth);
+
+app.get('/map', (req, res) => {
   res.render('pages/map', {
     centerLat: 40.019,
     centerLng: -105.2747,
@@ -94,47 +154,6 @@ app.get('/', (req, res) => {
 app.get('/profile', (req, res) => {
   res.render('pages/profile');
 });
-
-
-// login routes
-app.get('/login', (req, res) => {
-  res.render('pages/login');
-});
-
-app.post('/login', async (req, res) => {
-  try{
-  let username = req.body.username;
-  let password = req.body.password;
-  const searchQuery = 'SELECT * FROM users WHERE username = $1;';
-  let user= await db.one(searchQuery, [username])
-      // check if password from request matches with password in DB
-      const match = await bcrypt.compare(req.body.password, user.password);
-      if (match) {
-        req.session.user = user;
-req.session.save();
-          console.log("Login successful");
-          res.redirect('/profile')
-      }
-      else{
-        res.redirect('/login')
-        
-      }
-    }
-  catch {
-      console.log("Login failed");
-      return res.render('pages/login', { error: "Invalid username or password, please try again." });
-  }
-});
-
-// This was on lab 8 and can be used later for authentification.
-const auth = (req, res, next) => {
-  if (!req.session.user) {
-    return res.redirect('/login');
-  }
-  next();
-};
-
-app.use(auth);
 
 app.listen(3000);
 console.log('Server is listening on port 3000');
