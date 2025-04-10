@@ -33,70 +33,41 @@
         </div>
 
         <!-- Second Inner Rectangle -->
-        <div class="bg-[#4D1111] w-full max-w-[95%] h-[90%] p-5 flex flex-col items-center">
-            <h2 class="text-2xl font-bold text-white mb-5">POST CATALOG</h2>
-            <!-- New post form -->
-            <form 
-                action="/posts/create" 
-                method="POST" 
-                enctype="multipart/form-data"
-                class="mb-4 w-full max-w-md bg-[#3B0A0A] p-4 border border-[#4D1111] rounded shadow"
-            >
-                <div class="mb-3">
-                <label for="descriptionInput" class="block mb-1 text-white">Description:</label>
-                <textarea 
-                    id="descriptionInput" 
-                    name="description" 
-                    rows="3"
-                    class="w-full bg-[#3B0A0A] text-white border border-[#4D1111] rounded p-2"
-                ></textarea>
+        <div style="background-color: #4D1111; padding: 20px; border-radius: 8px; width: 100%; overflow: hidden; margin-top: 20px;">
+            <h2 style="text-align: center; color: white;">Post Catalog</h2>
+
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <button id="scroll-left" style="padding: 10px; cursor: pointer; margin: 0 10px; border-radius: 5px; border: none; background-color: #333; color: white;">&lt;</button>
+
+                <div id="post-container" style="display: flex; overflow-x: auto; gap: 15px; padding: 15px; max-width: 1000px; scroll-behavior: smooth;">
+                
+                {{#each posts}}
+                <div style="min-width: 250px; background-color: #3B0A0A; padding: 15px; border-radius: 8px; color: white;">
+                    <h3>{{this.title}}</h3>
+                    <p>{{this.description}}</p>
+                    <form action="/comments/create" method="POST">
+                    <input type="hidden" name="graffiti_id" value="{{this.id}}">
+                    <textarea name="comment_text" placeholder="Add a comment..." style="color: black; background-color: white;"></textarea>
+                    <button type="submit" style="padding: 5px; margin-top: 5px; border-radius: 5px; border: none; background-color: #555; color: white;">Comment</button>
+                    </form>
+                </div>
+                {{/each}}
+
                 </div>
 
-                <div class="mb-3">
-                <label for="imageInput" class="block mb-1 text-white">Image:</label>
-                <input 
-                    id="imageInput" 
-                    name="image" 
-                    type="file" 
-                    accept="image/*"
-                    class="block w-full text-sm text-white
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-[#4D1111] file:text-white
-                        hover:file:bg-[#3B0A0A]"
-                />
-                </div>
-
-                <button 
-                type="submit" 
-                class="bg-red-800 text-white py-2 px-4 rounded hover:bg-red-700 font-bold"
-                >
-                Create Post
-                </button>
-            </form>
-            <!-- End of new post form -->
-
-            <div class="grid grid-cols-4 gap-5 w-full h-full">
-                <!-- Post 1 -->
-                <div class="bg-[#3B0A0A] flex items-center justify-center text-white">
-                    POST 1
-                </div>
-                <!-- Post 2 -->
-                <div class="bg-[#3B0A0A] flex items-center justify-center text-white">
-                    POST 2
-                </div>
-                <!-- Post 3 -->
-                <div class="bg-[#3B0A0A] flex items-center justify-center text-white">
-                    POST 3
-                </div>
-                <!-- Post 4 -->
-                <div class="bg-[#3B0A0A] flex items-center justify-center text-white">
-                    POST 4
-                </div>
+                <button id="scroll-right" style="padding: 10px; cursor: pointer; margin: 0 10px; border-radius: 5px; border: none; background-color: #333; color: white;">&gt;</button>
             </div>
         </div>
     </div>
+    <script>
+    document.getElementById('scroll-left').onclick = () => {
+        document.getElementById('post-container').scrollBy({ left: -300, behavior: 'smooth' });
+    };
+
+    document.getElementById('scroll-right').onclick = () => {
+        document.getElementById('post-container').scrollBy({ left: 300, behavior: 'smooth' });
+    };
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     ></script>

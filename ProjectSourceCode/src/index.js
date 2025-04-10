@@ -152,8 +152,38 @@ app.get('/map', (req, res) => {
   });
 });
 
-app.get('/profile', (req, res) => {
-  res.render('pages/profile');
+app.get('/profile', async (req, res) => {
+  try {
+    const posts = await db.any(`
+      SELECT gp.*, ARRAY_AGG(c.comment_text) AS comments
+      FROM graffiti_posts gp
+      LEFT JOIN comments c ON gp.id = c.graffiti_id
+      GROUP BY gp.id
+      ORDER BY gp.created_at DESC
+    `);
+
+    res.render('pages/profile', { posts });
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.render('pages/profile', { posts: [] });
+  }
+});
+
+app.post('/comments/create', async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+    const { graffiti_id, comment_text } = req.body;
+
+    await db.none(`
+      INSERT INTO comments (user_id, graffiti_id, comment_text)
+      VALUES ($1, $2, $3)
+    `, [userId, graffiti_id, comment_text]);
+    
+    res.redirect('/profile');
+  } catch (err) {
+    console.error('Error creating comment:', err);
+    res.redirect('/profile');
+  }
 });
 
 app.get('/logout', (req, res) => {
