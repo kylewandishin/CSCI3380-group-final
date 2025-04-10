@@ -1,0 +1,24 @@
+// Use "https://marker.io/blog/user-acceptance-testing-template#uat-test-plan-template" templates.
+
+ **Test Case ID or Name**  
+Login: User Login with Valid Credentials
+
+**Description**  
+Check that a user that is already on the database can log in properly with his data
+
+**Test steps**  
+1. Go to the Login page (`/login`)
+2. Enter email: `user@mail.com`
+3. Enter password: `Password`
+4. Click on “Login” button
+
+**Expected result**  
+User should be redirected to the "my profile" page. This page should not be available until the user has succesfully loged in.
+
+**Actual result**  
+"Lab says to fill this later"
+
+**Status**  
+- [ ] Pass  
+- [ ] Fail
+// to be done after we actually make some tests.
