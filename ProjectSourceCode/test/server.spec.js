@@ -29,4 +29,34 @@ describe('Server!', () => {
 
 // *********************** TODO: WRITE 2 UNIT TESTCASES **************************
 
+describe('Login API', () => {
+    // Sample test case given to test / endpoint.
+    it('If user credentials are wrong show error message', done => {
+      chai
+        .request(server)
+        .post('/login')
+        .type('form')
+        .send({ username: 'testuser', password: 'wrongpassword' })
+        .end((err, res) => {
+         expect(res).to.have.status(200); // still renders login page
+         expect(res.text).to.include('Invalid username or password'); // or any error string you render
+         done();
+    });
+});
+
+it(' should show error and stay on login page with wrong credentials', done => {
+  chai
+    .request(server)
+    .post('/login')
+    .type('form')
+    .send({ username: 'testuser', password: 'wrongpassword' }) // invalid
+    .end((err, res) => {
+      expect(res).to.have.status(200); // still renders login page
+      expect(res.text).to.include('Invalid username or password');
+      done();
+    });
+});
+})     
+
+
 // ********************************************************************************
