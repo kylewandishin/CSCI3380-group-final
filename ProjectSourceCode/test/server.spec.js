@@ -64,6 +64,35 @@ describe('Login API', () => {
 
 // register tests
 
+describe('Register API', () => {
+  it('Should register a username that entered a usable username and password', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({
+        username: 'newuser_' + Math.floor(Math.random() * 10000), // ensure uniqueness
+        password: 'securepass123',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('Success');
+        done();
+      });
+  });
 
+  it('Should not register the user because is missing the username.', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({
+        password: 'password12', // make dummy data to test this
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.message).to.equal('Invalid input');
+        done();
+      });
+  });
+});
 
 // ********************************************************************************
