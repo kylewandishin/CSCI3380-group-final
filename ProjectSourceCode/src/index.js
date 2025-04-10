@@ -70,6 +70,67 @@ app.use(
 );
 
 app.get('/', (req, res) => {
+  res.redirect('/login');
+});
+app.get('/register', (req, res) => {
+  res.render('pages/register');
+});
+app.post('/register', async (req, res) => {
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10);
+    await db.query('INSERT INTO users (username, password) VALUES ($1, $2)', [
+      req.body.username,
+      hash,
+    ]);
+    res.redirect('/login');
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.redirect('/register');
+  }
+});
+app.get('/login', (req, res) => {
+  res.render('pages/login');
+});
+app.post('/login', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE username = $1', [
+      req.body.username,
+    ]);
+    if (!result || result.length === 0) {
+      return res.redirect('/register');
+    }
+    const user = result[0];
+    const match = await bcrypt.compare(req.body.password, user.password);
+    console.log('Password match:', match, req.body.password, user.password);
+    if (!match) {
+      return res.render('pages/login', {
+        message: 'Incorrect username or password.',
+      });
+    }
+    req.session.user = user;
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.redirect('/login');
+      }
+      res.redirect('/map');
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.render('pages/login', {
+      message: 'An error occurred. Please try again.',
+    });
+  }
+});
+const auth = (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+app.use(auth);
+
+app.get('/map', (req, res) => {
   res.render('pages/map', {
     centerLat: 40.019,
     centerLng: -105.2747,
@@ -95,28 +156,10 @@ app.get('/profile', (req, res) => {
   res.render('pages/profile');
 });
 
-app.post('/posts/create', async (req, res) => {
-  try {
-    const userId = 1;
-
-    const { description } = req.body;
-    
-    // placeholder image
-    let imageUrl = null;
-
-    let lat = 0.0;
-    let lng = 0.0;
-
-    await db.none(`
-      INSERT INTO graffiti_posts (user_id, image_url, description, latitude, longitude)
-      VALUES ($1, $2, $3, $4, $5)
-    `, [userId, imageUrl, description, lat, lng]);
-
-    res.redirect('/profile');
-  } catch (err) {
-    console.error('Error creating post:', err);
-    res.redirect('/profile');
-  }
+app.get('/logout', (req, res) => {
+  req.session.destroy(function (err) {
+    res.render('pages/logout');
+  });
 });
 
 app.listen(3000);
