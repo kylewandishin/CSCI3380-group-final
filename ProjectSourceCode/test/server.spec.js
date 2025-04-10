@@ -28,7 +28,7 @@ describe('Server!', () => {
 });
 
 // *********************** TODO: WRITE 2 UNIT TESTCASES **************************
-
+// negative route
 describe('Login API', () => {
     // Sample test case given to test / endpoint.
     it('If user credentials are wrong show error message', done => {
@@ -38,25 +38,32 @@ describe('Login API', () => {
         .type('form')
         .send({ username: 'testuser', password: 'wrongpassword' })
         .end((err, res) => {
-         expect(res).to.have.status(200); // still renders login page
-         expect(res.text).to.include('Invalid username or password'); // or any error string you render
+         expect(res).to.have.status(200); 
+         expect(res.text).to.include('Invalid username or password'); 
          done();
     });
 });
+})
 
-it(' should show error and stay on login page with wrong credentials', done => {
-  chai
-    .request(server)
-    .post('/login')
-    .type('form')
-    .send({ username: 'testuser', password: 'wrongpassword' }) // invalid
-    .end((err, res) => {
-      expect(res).to.have.status(200); // still renders login page
-      expect(res.text).to.include('Invalid username or password');
-      done();
-    });
-});
-})     
+// positive route
+describe('Login API', () => {
+  it('should redirect to /profile after successful login', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .redirects(0) 
+      .type('form')
+      .send({ username: 'testuser', password: 'testpass123' })
+      .end((err, res) => {
+        expect(res).to.have.status(302); 
+        expect(res).to.redirectTo(/\/profile$/); 
+        done();
+      });
+  });
+})  
+
+// register tests
+
 
 
 // ********************************************************************************
