@@ -101,6 +101,7 @@ app.post('/login', async (req, res) => {
     }
     const user = result[0];
     const match = await bcrypt.compare(req.body.password, user.password);
+    console.log('Password match:', match, req.body.password, user.password);
     if (!match) {
       return res.render('pages/login', {
         message: 'Incorrect username or password.',
@@ -153,6 +154,12 @@ app.get('/map', (req, res) => {
 
 app.get('/profile', (req, res) => {
   res.render('pages/profile');
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy(function (err) {
+    res.render('pages/logout');
+  });
 });
 
 app.listen(3000);
