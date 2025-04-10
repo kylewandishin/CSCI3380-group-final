@@ -1,9 +1,8 @@
 -- Users Table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
+    username VARCHAR(150) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -40,11 +39,3 @@ CREATE TABLE favorites (
     FOREIGN KEY (graffiti_id) REFERENCES graffiti_posts(id) ON DELETE CASCADE
 );
 
--- Graffiti Metadata Table
-CREATE TABLE graffiti_metadata (
-    graffiti_id INT PRIMARY KEY,
-    view_count INT DEFAULT 0,
-    report_count INT DEFAULT 0,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (graffiti_id) REFERENCES graffiti_posts(id) ON DELETE CASCADE
-);

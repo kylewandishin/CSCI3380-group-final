@@ -4,10 +4,9 @@
   {{#if error}}
     <p style="color: red;">{{error}}</p>
   {{/if}}
-  
   <div class="container" style="max-width: 400px; margin: 50px auto; padding: 20px; background-color: #6f2323; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <h2 style="margin-bottom: 20px;">Login</h2>
-    <form action="/login" method="POST">
+    <h2 style="margin-bottom: 20px;">Register</h2>
+    <form action="/register" method="POST">
       <div style="margin-bottom: 15px;">
         <label for="username" style="display: block; margin-bottom: 5px; font-weight: bold;">Username</label>
         <input
@@ -35,16 +34,11 @@
         class="btn"
         style="width: 100%; padding: 10px; background-color: #8b0000; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;"
       >
-        Login
+        Register
       </button>
-      {{#if message}}
-    <div class="alert alert-{{#if error}}danger{{else}}success{{/if}}" role="alert">
-      {{ message }}
-    </div>
-  {{/if}}
     </form>
     <div style="margin-top: 15px; color: white;">
-      Don't have an account? <a href="/register" style="color: #ffcccb;">Register</a>
+      Already have an account? <a href="/login" style="color: #ffcccb;">Login</a>
     </div>
   </div>
 </body>
