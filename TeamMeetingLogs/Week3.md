@@ -12,7 +12,7 @@ next week, we will:
 - andrew needs to change post creation logic commit to comment creation logic
 - cali get data rendering - when load map view, pull up post info and render it on map
 - matthew design popups 
-- andrew design comments
+- Juan design comments
 - test: when not logged in, it goes straight to login page
 - test: when logged in, redirect to profile
 - unit test for register (Juan)
