@@ -192,5 +192,11 @@ app.get('/logout', (req, res) => {
   });
 });
 
+app.get('/logout', (req, res) => {
+  req.session.destroy(function (err) {
+    res.render('pages/logout');
+  });
+});
+
 app.listen(3000);
 console.log('Server is listening on port 3000');

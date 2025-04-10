@@ -22,3 +22,52 @@ User should be redirected to the "my profile" page. This page should not be avai
 - [ ] Pass  
 - [ ] Fail
 // to be done after we actually make some tests.
+
+
+**Test Case ID or Name**  
+Succesfull registration
+
+**Description**  
+Verify that the user has created a profile.
+
+**Test steps**  
+1. Go to the Registration page (`/register`)
+2. Enter Name: `UserName`
+3. Enter Email: `user@gmail.com`
+4. Enter Password: `password12`
+5. Confirm Password: `password12`
+6. Click on “Register” button
+
+**Expected result**  
+The user should be redirected to the /login page and his data should be on the database and usable for a login
+
+**Actual result**  
+
+
+**Status**  
+- [ ] Pass  
+- [ ] Fail
+
+
+
+**Test Case ID or Name**  
+User creates and posts a comment
+
+**Description**  
+The user uses the comment buttom to create a comment
+
+**Test steps**  
+1. Log in with valid credentials
+2. Selects a post
+3. Presses the "comment' buttom
+4. Types the comment on the form that opened in the step before.
+5. Clicks "comment"
+
+**Expected result**  
+The comment should appear on the post  and should be saved on the database
+
+**Actual result**  
+
+**Status**  
+- [ ] Pass  
+- [ ] Fail
