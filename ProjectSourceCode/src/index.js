@@ -128,7 +128,7 @@ const auth = (req, res, next) => {
   }
   next();
 };
-app.use(auth);
+//app.use(auth);
 
 app.get('/map', (req, res) => {
   res.render('pages/map', {
@@ -160,6 +160,20 @@ app.get('/logout', (req, res) => {
   req.session.destroy(function (err) {
     res.render('pages/logout');
   });
+});
+
+app.post('/map', async (req, res) => {
+  const { comment_text, user_id, graffiti_id } = req.body;
+  try {
+    await db.query(
+      'INSERT INTO comments (user_id, graffiti_id, comment_text) VALUES ($1, $2, $3)',
+      [user_id, graffiti_id, comment_text]
+    );
+    res.redirect('/map');
+  } catch (error) {
+    console.error('error', error);
+    res.redirect('/map');
+  }
 });
 
 app.listen(3000);
