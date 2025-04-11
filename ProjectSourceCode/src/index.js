@@ -122,6 +122,7 @@ app.post('/login', async (req, res) => {
     });
   }
 });
+
 const auth = (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
@@ -130,26 +131,22 @@ const auth = (req, res, next) => {
 };
 app.use(auth);
 
-app.get('/map', (req, res) => {
-  res.render('pages/map', {
-    centerLat: 40.019,
-    centerLng: -105.2747,
-    zoom: 14,
-    markers: [
-      {
-        lat: 40.019,
-        lng: -105.2747,
-        img: 'https://ih1.redbubble.net/image.5161559193.6079/raf,360x360,075,t,fafafa:ca443f4786.jpg',
-        text: 'I am the angry pumpkin',
-      },
-      {
-        lat: 40.016,
-        lng: -105.2447,
-        img: 'https://ih1.redbubble.net/image.5161559193.6079/raf,360x360,075,t,fafafa:ca443f4786.jpg',
-        text: 'I am the angry pumpkin',
-      },
-    ],
-  });
+app.get('/map', async (req, res) => {
+  try {
+    const markers = await db.query(
+      'SELECT latitude AS lat, longitude AS lng, image_url AS img, description AS text FROM graffiti_posts'
+    );
+
+    res.render('pages/map', {
+      centerLat: 40.019,
+      centerLng: -105.2747,
+      zoom: 14,
+      markers: markers,
+    });
+  } catch (error) {
+    console.error('Error fetching graffiti posts:', error);
+    res.status(500).send('Database error');
+  }
 });
 
 app.get('/profile', (req, res) => {
