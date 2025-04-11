@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "prepare": "husky",
-    "precommit": "lint-staged",
+    "precommit": "npm run clean",
     "predev": "npm i",
     "prestart": "npm run build",
     "prebuild": "npm install",

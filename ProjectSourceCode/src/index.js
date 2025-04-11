@@ -166,7 +166,7 @@ app.use(auth);
 app.get('/map', async (req, res) => {
   try {
     const markers = await db.query(
-      'SELECT latitude AS lat, longitude AS lng, image_url AS img, description AS text FROM graffiti_posts'
+      'SELECT latitude AS lat, longitude AS lng, image_url AS img, description AS text FROM graffiti_posts',
     );
 
     res.render('pages/map', {
