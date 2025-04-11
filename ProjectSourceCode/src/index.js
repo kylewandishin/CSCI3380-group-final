@@ -122,14 +122,14 @@ app.post('/login', async (req, res) => {
     });
   }
 });
-const auth = (req, res, next) => {
+/*const auth = (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
   }
   next();
 };
 app.use(auth);
-
+*/
 app.get('/map', (req, res) => {
   res.render('pages/map', {
     centerLat: 40.019,
