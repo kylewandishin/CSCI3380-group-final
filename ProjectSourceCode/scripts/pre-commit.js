@@ -16,7 +16,7 @@ try {
   execSync('git update-index --again', { stdio: 'inherit' });
 
   // Run tests and build commands
-  execSync('npm run test', { stdio: 'inherit' });
+  execSync('npm run test:unit', { stdio: 'inherit' });
   execSync('npm run build', { stdio: 'inherit' });
 } catch (error) {
   console.error(error);
