@@ -172,16 +172,18 @@ app.get('/map', async (req, res) => {
         gp.longitude AS lng,
         gp.image_url AS img,
         gp.description AS text,
+        author.username AS author_username,
         COALESCE(JSON_AGG(
           JSON_BUILD_OBJECT(
-            'username', u.username,
+            'username', commenter.username,
             'comment_text', c.comment_text
           )
         ) FILTER (WHERE c.id IS NOT NULL), '[]') AS comments
       FROM graffiti_posts gp
+      JOIN users author ON gp.user_id = author.id
       LEFT JOIN comments c ON c.graffiti_id = gp.id
-      LEFT JOIN users u ON u.id = c.user_id
-      GROUP BY gp.id
+      LEFT JOIN users commenter ON commenter.id = c.user_id
+      GROUP BY gp.id, author.username
     `);
 
     res.render('pages/map', {
