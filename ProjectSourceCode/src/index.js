@@ -122,6 +122,7 @@ app.post('/login', async (req, res) => {
     });
   }
 });
+/*
 const auth = (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
@@ -129,27 +130,59 @@ const auth = (req, res, next) => {
   next();
 };
 //app.use(auth);
+*/
 
-app.get('/map', (req, res) => {
-  res.render('pages/map', {
-    centerLat: 40.019,
-    centerLng: -105.2747,
-    zoom: 14,
-    markers: [
-      {
-        lat: 40.019,
-        lng: -105.2747,
-        img: 'https://ih1.redbubble.net/image.5161559193.6079/raf,360x360,075,t,fafafa:ca443f4786.jpg',
-        text: 'I am the angry pumpkin',
-      },
-      {
-        lat: 40.016,
-        lng: -105.2447,
-        img: 'https://ih1.redbubble.net/image.5161559193.6079/raf,360x360,075,t,fafafa:ca443f4786.jpg',
-        text: 'I am the angry pumpkin',
-      },
-    ],
-  });
+
+app.get('/map', async (req, res) => {
+  try {
+    const markers = await db.any(`
+      SELECT 
+        gp.id AS graffiti_id,
+        gp.latitude AS lat,
+        gp.longitude AS lng,
+        gp.image_url AS img,
+        gp.description AS text,
+        COALESCE(JSON_AGG(
+          JSON_BUILD_OBJECT(
+            'username', u.username,
+            'comment_text', c.comment_text
+          )
+        ) FILTER (WHERE c.id IS NOT NULL), '[]') AS comments
+      FROM graffiti_posts gp
+      LEFT JOIN comments c ON c.graffiti_id = gp.id
+      LEFT JOIN users u ON u.id = c.user_id
+      GROUP BY gp.id
+    `);
+
+    res.render('pages/map', {
+      centerLat: 40.019,
+      centerLng: -105.2747,
+      zoom: 14,
+      markers: markers,
+    });
+  } catch (error) {
+    console.error('Error fetching graffiti posts:', error);
+    res.status(500).send('Database error');
+  }
+});
+
+app.post('/comment', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { graffiti_id, comment_text } = req.body;
+
+  try {
+    await db.none(
+      'INSERT INTO comments (user_id, graffiti_id, comment_text) VALUES ($1, $2, $3)',
+      [req.session.user.id, graffiti_id, comment_text]
+    );
+    res.status(200).json({ message: 'Comment added successfully' });
+  } catch (error) {
+    console.error('Error inserting comment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 app.get('/profile', (req, res) => {
@@ -162,19 +195,6 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.post('/map', async (req, res) => {
-  const { comment_text, user_id, graffiti_id } = req.body;
-  try {
-    await db.query(
-      'INSERT INTO comments (user_id, graffiti_id, comment_text) VALUES ($1, $2, $3)',
-      [user_id, graffiti_id, comment_text]
-    );
-    res.redirect('/map');
-  } catch (error) {
-    console.error('error', error);
-    res.redirect('/map');
-  }
-});
 
 app.listen(3000);
 console.log('Server is listening on port 3000');
