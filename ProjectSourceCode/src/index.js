@@ -69,6 +69,10 @@ app.use(
   }),
 );
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'success', message: 'Welcome!' });
+});
+
 app.get('/', (req, res) => {
   res.redirect('/login');
 });
@@ -77,12 +81,41 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', async (req, res) => {
   try {
+    if (!req.body.username) {
+      return res.status(400).render('pages/register', {
+        error: 'Username is required',
+      });
+    }
+    if (!req.body.password) {
+      return res.status(400).render('pages/register', {
+        error: 'Password is required',
+      });
+    }
     const hash = await bcrypt.hash(req.body.password, 10);
+    const result = await db.query('SELECT * FROM users WHERE username = $1', [
+      req.body.username,
+    ]);
+    if (result.length > 0) {
+      return res.render('pages/register', {
+        error: 'Username already exists.',
+      });
+    }
+
     await db.query('INSERT INTO users (username, password) VALUES ($1, $2)', [
       req.body.username,
       hash,
     ]);
-    res.redirect('/login');
+    const user = await db.query('SELECT * FROM users WHERE username = $1', [
+      req.body.username,
+    ]);
+    req.session.user = user;
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.redirect('/login');
+      }
+      res.redirect('/map');
+    });
   } catch (error) {
     console.error('Registration error:', error);
     res.redirect('/register');
@@ -101,7 +134,6 @@ app.post('/login', async (req, res) => {
     }
     const user = result[0];
     const match = await bcrypt.compare(req.body.password, user.password);
-    console.log('Password match:', match, req.body.password, user.password);
     if (!match) {
       return res.render('pages/login', {
         message: 'Incorrect username or password.',
@@ -133,9 +165,24 @@ app.use(auth);
 
 app.get('/map', async (req, res) => {
   try {
-    const markers = await db.query(
-      'SELECT latitude AS lat, longitude AS lng, image_url AS img, description AS text FROM graffiti_posts'
-    );
+    const markers = await db.any(`
+      SELECT 
+        gp.id AS graffiti_id,
+        gp.latitude AS lat,
+        gp.longitude AS lng,
+        gp.image_url AS img,
+        gp.description AS text,
+        COALESCE(JSON_AGG(
+          JSON_BUILD_OBJECT(
+            'username', u.username,
+            'comment_text', c.comment_text
+          )
+        ) FILTER (WHERE c.id IS NOT NULL), '[]') AS comments
+      FROM graffiti_posts gp
+      LEFT JOIN comments c ON c.graffiti_id = gp.id
+      LEFT JOIN users u ON u.id = c.user_id
+      GROUP BY gp.id
+    `);
 
     res.render('pages/map', {
       centerLat: 40.019,
@@ -146,6 +193,25 @@ app.get('/map', async (req, res) => {
   } catch (error) {
     console.error('Error fetching graffiti posts:', error);
     res.status(500).send('Database error');
+  }
+});
+
+app.post('/comment', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { graffiti_id, comment_text } = req.body;
+
+  try {
+    await db.none(
+      'INSERT INTO comments (user_id, graffiti_id, comment_text) VALUES ($1, $2, $3)',
+      [req.session.user.id, graffiti_id, comment_text],
+    );
+    res.status(200).json({ message: 'Comment added successfully' });
+  } catch (error) {
+    console.error('Error inserting comment:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -161,3 +227,4 @@ app.get('/logout', (req, res) => {
 
 app.listen(3000);
 console.log('Server is listening on port 3000');
+module.exports = app;
