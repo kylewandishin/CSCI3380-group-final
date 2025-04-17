@@ -104,3 +104,10 @@ INSERT INTO favorites (user_id, graffiti_id) VALUES
 (1, 11),
 (2, 12),
 (3, 13);
+
+-- Insert follows
+
+-- Example inserts (assuming user IDs already exist in the users table)
+INSERT INTO follows (follower_id, followed_id) VALUES (1, 2);
+INSERT INTO follows (follower_id, followed_id) VALUES (1, 3);
+INSERT INTO follows (follower_id, followed_id) VALUES (2, 3);
