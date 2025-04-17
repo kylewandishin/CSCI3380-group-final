@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14
+    env_file: .env
+    expose:
+      - "5432"
+    volumes:
+      - final-dev:/var/lib/postgresql/data
+      - ./src/init-data:/docker-entrypoint-initdb.d
+
+  web:
+    image: node:lts-alpine
+    user: ""  # Remove if you run into permission issues with package installation.
+    working_dir: /home/node/app
+    env_file: .env
+    environment:
+      - NODE_ENV=test  # Set to test for your CI environment.
+    depends_on:
+      - db
+    volumes:
+      - ./:/home/node/app
+    command: "npm test && node script/processResults.js"  # Runs your test script.
+    # Removed ports mapping as it's typically not needed during CI testing.
+
+volumes:
+  final-dev:
