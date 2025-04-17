@@ -185,7 +185,7 @@ app.get('/map', async (req, res) => {
       LEFT JOIN users commenter ON commenter.id = c.user_id
       GROUP BY gp.id, author.username
     `);
-
+ 
     res.render('pages/map', {
       centerLat: 40.019,
       centerLng: -105.2747,
