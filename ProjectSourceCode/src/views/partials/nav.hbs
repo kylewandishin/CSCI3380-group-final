@@ -16,5 +16,13 @@
         <a class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]" href="/login">Login</a>
       {{/if}}
     </div>
+    <div class="w-1/5 flex justify-end">
+      <script>
+        const userLoggedIn = true; // Replace with actual authentication check
+        if (userLoggedIn) {
+          document.write('<a href="/logout" class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]">Logout</a>');
+        }
+      </script>
+    </div>
   </nav>
 </header>
