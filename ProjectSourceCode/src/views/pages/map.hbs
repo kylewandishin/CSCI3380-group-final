@@ -8,7 +8,16 @@
   {{> map-partial lat=centerLat lng=centerLng zoom=zoom }}
   
   {{#each markers}}
-    {{> leaflet-marker lat=this.lat lng=this.lng popupImgUrl=this.img popupText=this.text }}
+    {{> leaflet-marker 
+        lat=this.lat 
+        lng=this.lng 
+        popupImgUrl=this.img 
+        popupText=this.text
+        authorUsername=this.author_username
+        authorId=this.author_id
+        isFollowing=this.is_following
+        comments=this.comments
+        graffitiId=this.graffiti_id }}
   {{/each}}
   <script src="/js/script.js"></script>
 </body>
