@@ -231,8 +231,25 @@ app.post('/comment', async (req, res) => {
   }
 });
 
-app.get('/profile', (req, res) => {
-  res.render('pages/profile');
+app.get('/profile', async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login'); // redirect to login if not authenticated
+  }
+
+  try {
+    const userId = req.session.user.id;
+    const posts = await db.any(
+      'SELECT image_url FROM graffiti_posts WHERE user_id = $1',
+      [userId]
+    );
+
+    res.render('pages/profile', {
+      posts: posts,
+    });
+  } catch (error) {
+    console.error('Error loading user posts for profile:', error);
+    res.status(500).send('Internal server error');
+  }
 });
 
 app.post('/follow', async (req, res) => {
