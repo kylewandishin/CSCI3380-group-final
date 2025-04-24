@@ -1,8 +1,15 @@
 <div class="popup-content" style="max-width: 300px; font-family: Arial, sans-serif;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+  <!-- Following -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
     <strong>{{author_username}}</strong>
-    <button style="background-color: #4D1111; color: white; border: none; padding: 5px 10px; border-radius: 5px;">
-      Follow
+
+    <button
+      id="follow-btn-{{author_id}}"
+      data-followed-id="{{author_id}}"
+      data-is-following="{{is_following}}"
+      onclick="toggleFollow(this)"
+      style="background-color:#4D1111;color:white;border:none;padding:5px 10px;border-radius:5px">
+      {{#if is_following}}Un‑follow{{else}}Follow{{/if}}
     </button>
   </div>
 
