@@ -9,7 +9,7 @@ INSERT INTO users (username, password) VALUES
 ('sprayartist404', '$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO'),
 ('paintdesigner505', '$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO'),
 ('stylecreator606','$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO'),
-('urbanlegend707', '$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO');
+('urbanlegend707', '5');
 -- Insert Graffiti Posts (centered around Boulder, Colorado)
 INSERT INTO graffiti_posts (user_id, image_url, description, latitude, longitude) VALUES
 (1, 'https://media.timeout.com/images/105671264/1372/1029/image.jpg', 'Amazing street art in Boulder', 40.0150, -105.2705),
