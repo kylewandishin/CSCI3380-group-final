@@ -105,7 +105,7 @@ app.post('/register', async (req, res) => {
       req.body.username,
       hash,
     ]);
-    const [user] = await db.query('SELECT * FROM users WHERE username = $1', [
+    const user = await db.query('SELECT * FROM users WHERE username = $1', [
       req.body.username,
     ]);
     req.session.user = user;
@@ -171,22 +171,14 @@ app.get('/logout', (req, res) => {
 
 app.get('/map', async (req, res) => {
   try {
-    const viewerId = req.session.user.id;
-
     const markers = await db.any(`
       SELECT 
-        gp.id           AS graffiti_id,
-        gp.latitude     AS lat,
-        gp.longitude    AS lng,
-        gp.image_url    AS img,
-        gp.description  AS text,
-        author.id       AS author_id,
+        gp.id AS graffiti_id,
+        gp.latitude AS lat,
+        gp.longitude AS lng,
+        gp.image_url AS img,
+        gp.description AS text,
         author.username AS author_username,
-        EXISTS (
-          SELECT 1 FROM follows f
-          WHERE f.follower_id = $/viewerId/
-            AND f.followed_id = author.id
-        )               AS is_following,
         COALESCE(JSON_AGG(
           JSON_BUILD_OBJECT(
             'username', commenter.username,
@@ -197,8 +189,8 @@ app.get('/map', async (req, res) => {
       JOIN users author ON gp.user_id = author.id
       LEFT JOIN comments c ON c.graffiti_id = gp.id
       LEFT JOIN users commenter ON commenter.id = c.user_id
-      GROUP BY gp.id, author.id, author.username
-    `, { viewerId });
+      GROUP BY gp.id, author.username
+    `);
  
     res.render('pages/map', {
       centerLat: 40.019,
@@ -231,60 +223,9 @@ app.post('/comment', async (req, res) => {
   }
 });
 
-app.get('/profile', async (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/login'); // redirect to login if not authenticated
-  }
-
-  try {
-    const userId = req.session.user.id;
-    const posts = await db.any(
-      'SELECT image_url FROM graffiti_posts WHERE user_id = $1',
-      [userId]
-    );
-
-    res.render('pages/profile', {
-      posts: posts,
-    });
-  } catch (error) {
-    console.error('Error loading user posts for profile:', error);
-    res.status(500).send('Internal server error');
-  }
+app.get('/profile', (req, res) => {
+  res.render('pages/profile');
 });
-
-app.post('/follow', async (req, res) => {
-  if (!req.session.user) return res.status(401).json({ error: 'unauth' });
-
-  const followerId = req.session.user.id;
-  const followedId = Number(req.body.followed_id);
-
-  if (followerId === followedId) return res.status(400).json({ error: 'self' });
-
-  try {
-    const exists = await db.oneOrNone(
-      'SELECT 1 FROM follows WHERE follower_id=$1 AND followed_id=$2',
-      [followerId, followedId]
-    );
-
-    if (exists) {
-      await db.none(
-        'DELETE FROM follows WHERE follower_id=$1 AND followed_id=$2',
-        [followerId, followedId]
-      );
-      return res.json({ status: 'unfollowed' });
-    } else {
-      await db.none(
-        'INSERT INTO follows (follower_id, followed_id) VALUES ($1,$2)',
-        [followerId, followedId]
-      );
-      return res.json({ status: 'followed' });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'db' });
-  }
-});
-
 
 app.listen(3000);
 console.log('Server is listening on port 3000');
