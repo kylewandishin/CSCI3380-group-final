@@ -3,7 +3,7 @@ const prettierConfig = require('./.prettierrc.cjs');
 
 module.exports = [
   {
-    ignores: ['node_modules/', 'dist/'],
+    ignores: ['node_modules/', 'dist/', 'test/', 'results.json'],
   },
   {
     languageOptions: {

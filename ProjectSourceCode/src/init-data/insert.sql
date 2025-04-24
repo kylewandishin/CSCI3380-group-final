@@ -9,7 +9,7 @@ INSERT INTO users (username, password) VALUES
 ('sprayartist404', '$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO'),
 ('paintdesigner505', '$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO'),
 ('stylecreator606','$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO'),
-('urbanlegend707', '$2b$10$zMo5C/fR7f5.SA3G9kFXAudeim3diP/jpZ4nVTH2eLahiGB/efKxO');
+('urbanlegend707', '5');
 -- Insert Graffiti Posts (centered around Boulder, Colorado)
 INSERT INTO graffiti_posts (user_id, image_url, description, latitude, longitude) VALUES
 (1, 'https://media.timeout.com/images/105671264/1372/1029/image.jpg', 'Amazing street art in Boulder', 40.0150, -105.2705),
@@ -20,8 +20,8 @@ INSERT INTO graffiti_posts (user_id, image_url, description, latitude, longitude
 (6, 'https://th.bing.com/th/id/R.78223b337994dd41180ab2bd50ba6dc5?rik=3PBITHhagmW%2bBw&riu=http%3a%2f%2f2.bp.blogspot.com%2f-3kfeN5idG0g%2fUtn_qYqvUjI%2fAAAAAAAACWQ%2fGpR2bkHxOPo%2fs1600%2fDSC_0369.JPG&ehk=IZNngVhIC%2f5QGY8IawPZfrZAHRSmKk4Wl%2fX7d7i9Zi0%3d&risl=&pid=ImgRaw&r=0', 'Stunning graffiti in an unexpected location', 40.0165, -105.2750),
 (7, 'https://www.thediscoveriesof.com/wp-content/uploads/2019/06/Denver-69.jpg', 'Modern street art with a message', 40.0120, -105.2680),
 (8, 'https://th.bing.com/th/id/R.64006b42caafa7e8f0762b62c70d804c?rik=SREnyqCGBIbUPg&riu=http%3a%2f%2f3.bp.blogspot.com%2f-8mJZT1ymGa4%2fUtoFqrWaTJI%2fAAAAAAAACYA%2f-D9oBmIpzYM%2fs1600%2fDSC_0397.JPG&ehk=X7FMqogI0L9plEn1QzZoIb9iz%2bSAuCVHLDzY6pKXV%2fo%3d&risl=&pid=ImgRaw&r=0', 'Classic graffiti style with a twist', 40.0195, -105.2800),
-(9, 'https://www.katiekinsley.com/storage/2014/10/street-art-graffiti-1-1.webp', 'Impressive mural covering the entire wall', 40.0080, -105.2700),
-(10, 'https://www.katiekinsley.com/storage/2014/10/street-art-graffiti-2.webp', 'Minimalist graffiti with powerful impact', 40.0140, -105.2730),
+(9, 'https://th.bing.com/th/id/R.e973a245e3427ed1f02d413d00f38cee?rik=lE%2fmo7xY4A5YlQ&riu=http%3a%2f%2f4.bp.blogspot.com%2f_LYNVGEXliZ4%2fTT5DeXPnsFI%2fAAAAAAAABgw%2fMA4QdFsCglU%2fs1600%2fgraffiti_wall_street_art_design.JPG&ehk=%2f2FkHNxDrwsTcAVorrlcWilLLFpfd7eEvm7MhYkXVzE%3d&risl=&pid=ImgRaw&r=0', 'Impressive mural covering the entire wall', 40.0080, -105.2700),
+(10, 'https://th.bing.com/th/id/OIP.9adwwG5-O22LB2QZY2JshQHaE8?rs=1&pid=ImgDetMain', 'Minimalist graffiti with powerful impact', 40.0140, -105.2730),
 (1, 'https://media.timeout.com/images/105671264/1372/1029/image.jpg', 'Another amazing piece in Boulder', 40.0170, -105.2760),
 (2, 'https://th.bing.com/th/id/OIP.E_pysQsVc63cjTODHGUONQHaE7?rs=1&pid=ImgDetMain', 'Vibrant colors in this street art', 40.0110, -105.2690),
 (3, 'https://th.bing.com/th/id/R.33a3734789fb62ffcc9b14cb9e987ef6?rik=%2bGRtPxIvA%2bIFVw&pid=ImgRaw&r=0', 'Graffiti that tells a story', 40.0205, -105.2815),
@@ -30,8 +30,8 @@ INSERT INTO graffiti_posts (user_id, image_url, description, latitude, longitude
 (6, 'https://th.bing.com/th/id/R.78223b337994dd41180ab2bd50ba6dc5?rik=3PBITHhagmW%2bBw&riu=http%3a%2f%2f2.bp.blogspot.com%2f-3kfeN5idG0g%2fUtn_qYqvUjI%2fAAAAAAAACWQ%2fGpR2bkHxOPo%2fs1600%2fDSC_0369.JPG&ehk=IZNngVhIC%2f5QGY8IawPZfrZAHRSmKk4Wl%2fX7d7i9Zi0%3d&risl=&pid=ImgRaw&r=0', 'Graffiti that makes you think', 40.0180, -105.2780),
 (7, 'https://www.thediscoveriesof.com/wp-content/uploads/2019/06/Denver-69.jpg', 'Street art that brightens the day', 40.0100, -105.2685),
 (8, 'https://th.bing.com/th/id/R.64006b42caafa7e8f0762b62c70d804c?rik=SREnyqCGBIbUPg&riu=http%3a%2f%2f3.bp.blogspot.com%2f-8mJZT1ymGa4%2fUtoFqrWaTJI%2fAAAAAAAACYA%2f-D9oBmIpzYM%2fs1600%2fDSC_0397.JPG&ehk=X7FMqogI0L9plEn1QzZoIb9iz%2bSAuCVHLDzY6pKXV%2fo%3d&risl=&pid=ImgRaw&r=0', 'Graffiti that transforms the space', 40.0155, -105.2715),
-(9, 'https://www.katiekinsley.com/storage/2014/10/street-art-graffiti-1-1.webp', 'Street art that speaks to the community', 40.0095, -105.2710),
-(10, 'https://www.katiekinsley.com/storage/2014/10/street-art-graffiti-2.webp', 'Graffiti that captures Boulder''s essence', 40.0160, -105.2755);
+(9, 'https://th.bing.com/th/id/R.e973a245e3427ed1f02d413d00f38cee?rik=lE%2fmo7xY4A5YlQ&riu=http%3a%2f%2f4.bp.blogspot.com%2f_LYNVGEXliZ4%2fTT5DeXPnsFI%2fAAAAAAAABgw%2fMA4QdFsCglU%2fs1600%2fgraffiti_wall_street_art_design.JPG&ehk=%2f2FkHNxDrwsTcAVorrlcWilLLFpfd7eEvm7MhYkXVzE%3d&risl=&pid=ImgRaw&r=0', 'Street art that speaks to the community', 40.0095, -105.2710),
+(10, 'https://th.bing.com/th/id/OIP.9adwwG5-O22LB2QZY2JshQHaE8?rs=1&pid=ImgDetMain', 'Graffiti that captures Boulder''s essence', 40.0160, -105.2755);
 
 -- Insert Comments
 INSERT INTO comments (user_id, graffiti_id, comment_text) VALUES
@@ -104,3 +104,10 @@ INSERT INTO favorites (user_id, graffiti_id) VALUES
 (1, 11),
 (2, 12),
 (3, 13);
+
+-- Insert follows
+
+-- Example inserts (assuming user IDs already exist in the users table)
+INSERT INTO follows (follower_id, followed_id) VALUES (1, 2);
+INSERT INTO follows (follower_id, followed_id) VALUES (1, 3);
+INSERT INTO follows (follower_id, followed_id) VALUES (2, 3);

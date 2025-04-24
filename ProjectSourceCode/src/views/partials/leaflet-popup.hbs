@@ -1,14 +1,18 @@
-<div class="popup-content">
-  <img src="{{imgUrl}}" alt="Popup image" style="max-width:150px; display:block; margin-bottom: 5px;">
-  <p>{{text}}</p>
 <div class="popup-content" style="max-width: 300px; font-family: Arial, sans-serif;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+    <strong>{{author_username}}</strong>
+    <button style="background-color: #4D1111; color: white; border: none; padding: 5px 10px; border-radius: 5px;">
+      Follow
+    </button>
+  </div>
+
   <img src="{{imgUrl}}" alt="Popup image" style="width: 100%; border-radius: 8px; margin-bottom: 10px;">
   <p style="margin-bottom: 15px;">{{text}}</p>
 
   {{#if comments.length}}
     <div style="border-top: 1px solid #ccc; padding-top: 10px;">
       <h4 style="margin: 0 0 10px 0; font-size: 1em;">Comments:</h4>
-      <ul style="list-style: none; padding-left: 0;">
+      <ul style="list-style: none; padding-left: 0;" class="max-h-40 overflow-y-auto">
         {{#each comments}}
           <li style="margin-bottom: 8px; padding: 6px 10px; background-color: #f1f1f1; border-radius: 6px;">
             <strong>{{this.username}}:</strong> {{this.comment_text}}
@@ -32,3 +36,4 @@
   Add Comment
 </button>
 </div>
+

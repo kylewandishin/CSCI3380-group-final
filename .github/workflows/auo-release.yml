@@ -1,0 +1,29 @@
+# .github/workflows/auto-release.yml
+name: Auto Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: autorelease
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set tag env
+        id: vars
+        run: echo "TAG=v${{ github.run_number }}" >> "$GITHUB_ENV"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name:     ${{ env.TAG }}
+          generate_release_notes: true

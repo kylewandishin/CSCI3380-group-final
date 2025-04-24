@@ -14,16 +14,18 @@ try {
   process.exit(1);
 }
 
+try {
+  exec('node pre-commit.js', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing pre-commit.js: ${error.message}`);
+      exit(1); // Exit with error code if there is an error
+    }
+    console.log(`stdout: ${stdout}`);
+      console.log('main.js executed successfully.');
+  });
+}
+catch (error) {
+  console.error(`Error: ${error.message}`);
+  exit(1); // Exit with error code if there is an error
+}
 // Now run 'node main.js' in the new directory
-exec('node pre-commit.js', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error executing pre-commit.js: ${error.message}`);
-    exit(1); // Exit with error code if there is an error
-  }
-  if (stderr) {
-    console.error(`stderr: ${stderr}`);
-    exit(1); // Exit with error code if stderr is not empty
-  }
-  console.log(`stdout: ${stdout}`);
-    console.log('main.js executed successfully.');
-});

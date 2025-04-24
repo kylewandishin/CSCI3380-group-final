@@ -39,3 +39,15 @@ CREATE TABLE favorites (
     FOREIGN KEY (graffiti_id) REFERENCES graffiti_posts(id) ON DELETE CASCADE
 );
 
+-- Followers table
+CREATE TABLE follows (
+    follower_id INTEGER NOT NULL,
+    followed_id INTEGER NOT NULL,
+    followed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (follower_id, followed_id),
+    FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (followed_id) REFERENCES users(id) ON DELETE CASCADE,
+    CHECK (follower_id <> followed_id) -- Optional: Prevent self-following
+);
+
+

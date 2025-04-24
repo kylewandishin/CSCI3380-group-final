@@ -4,26 +4,18 @@
     GraffTrak
   </h1>
 
-  <!-- Navbar -->
-  <nav class="bg-[#2b0c0c] p-3 flex justify-between items-center">
-    <!-- Left Spacing (Keeps everything centered) -->
-    <div class="w-1/5"></div>
-
-    <!-- Centered Navbar Links with More Spacing -->
-    <div class="flex justify-center space-x-20 w-3/5">
+  <!-- Centered Navbar -->
+  <nav class="bg-[#2b0c0c] p-3 flex justify-center">
+    <div class="flex justify-center space-x-10">
       <a class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]" href="/">Graff Map</a>
       <a class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]" href="/profile">My Account</a>
+
       {{#if userLoggedIn}}
+        <a class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]" href="/logout">Logout</a>
       {{else}}
         <a class="bg-[#4d1c1c] text-[#9c3c3c] px-6 py-2 rounded-lg border border-[#9c3c3c] hover:bg-[#5e2626]" href="/login">Login</a>
       {{/if}}
-      <div class="flex items-center bg-[#4d1c1c] px-6 py-2 rounded-lg border border-[#9c3c3c]">
-        <span class="text-[#9c3c3c]">🔍</span>
-        <input type="text" placeholder="Search" class="bg-transparent text-[#9c3c3c] border-none focus:outline-none ml-2 w-36" />
-      </div>
     </div>
-
-    <!-- Logout Button (Right-Aligned) -->
     <div class="w-1/5 flex justify-end">
       <script>
         const userLoggedIn = true; // Replace with actual authentication check
